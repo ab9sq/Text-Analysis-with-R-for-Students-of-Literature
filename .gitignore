@@ -1,5 +1,7 @@
-# Reference material for myself
+# Project Specific Files
 
+# ZIp Files
+*.zip
 
 # -------------------------------------->R and R Studio<------------------------
 # History files
