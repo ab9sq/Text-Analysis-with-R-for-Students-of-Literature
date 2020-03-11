@@ -1,0 +1,116 @@
+---
+title: "Chapter 2"
+author: "Nick Lauerman"
+date: "Started 11-Mar-2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Libraries
+
+# Loading the First Text File
+```{r}
+text.v <- scan(file = "./SupportingMaterials/data/plainText/melville.txt",
+               what = "character",
+               sep = "\n")
+text.v.1 <- scan("http://www.gutenberg.org/cache/epub/2701/pg2701.txt",
+                 what = "character",
+                 sep = "\n")
+# download not working correctly
+#text.v
+text.v[1]
+```
+
+# Separate content from Metadata
+```{r}
+start.v <- which(text.v == "CHAPTER 1. Loomings.")
+end.v <- which(text.v == "orphan.")
+start.v
+end.v
+
+length(text.v)
+start.metadata.v <- text.v[1:start.v-1]
+end.metadata.v <- text.v[end.v+1:length(text.v)]
+novel.lines.v <- text.v[start.v:end.v]
+
+metadata.v <- c(text.v[1:(start.v-1)],
+                text.v[(end.v+1):length(text.v)])
+
+text.v[start.v]
+text.v[start.v-1]
+text.v[end.v]
+text.v[end.v+1]
+
+length(text.v)
+length(novel.lines.v)
+
+novel.v <- paste(novel.lines.v,
+                 collapse = " ")
+
+length(novel.v)
+```
+
+# Reprocessing the Content
+```{r}
+novel.lower.v <- tolower(novel.v)
+moby.words.l <- strsplit(novel.lower.v,
+                         "\\W")
+class(novel.lines.v)
+class(moby.words.l)
+
+str(moby.words.l)
+
+moby.words.v <- unlist(moby.words.l)
+
+not.blanks.v <- which(moby.words.v != "")
+not.blanks.v
+moby.words.v <- moby.words.v[not.blanks.v]
+moby.words.v[1:10]
+
+moby.words.v[99986]
+
+which(moby.words.v == "whale")
+moby.words.v[which(moby.words.v == "whale")]
+```
+
+# Beginning the Analysis
+```{r}
+length(which(moby.words.v == "whale"))
+
+length(moby.words.v)
+
+#Put a count of occurance of whale into whale.hits.v
+whale.hits.v <- length(which(moby.words.v == "whale"))
+
+#Put a count of totlal words into total.words.v
+total.words.v <- length(moby.words.v)
+
+#now devide
+whale.hits.v / total.words.v
+
+length(unique(moby.words.v))
+
+moby.fraqs.t <- table(moby.words.v)
+moby.fraqs.t[1:10]
+sorted.moby.fraq.t <- sort(moby.fraqs.t,
+                           decreasing = TRUE)
+sorted.moby.fraq.t[1:10]
+```
+
+# Practice
+## 2.1
+```{r}
+top.tem.moby.words.v <- sorted.moby.fraq.t[1:10]
+plot(top.tem.moby.words.v,
+     type = "b",
+     xlab = "Top Ten Words",
+     ylab = "Word Count")
+```
+
+
+
+
+
