@@ -1,0 +1,39 @@
+---
+title: "Chapter 3"
+author: "Nick Lauerman"
+date: "Started 11-Mar-2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+text.v <- scan(file = "./SupportingMaterials/data/plainText/melville.txt",
+               what = "character",
+               sep = "\n")
+start.v <- which(text.v == "CHAPTER 1. Loomings.")
+end.v <- which(text.v == "orphan.")
+start.metadata.v <- text.v[1:start.v-1]
+end.metadata.v <- text.v[end.v+1:length(text.v)]
+novel.lines.v <- text.v[start.v:end.v]
+metadata.v <- c(text.v[1:(start.v-1)],
+                text.v[(end.v+1):length(text.v)])
+novel.v <- paste(novel.lines.v,
+                 collapse = " ")
+novel.lower.v <- tolower(novel.v)
+moby.words.l <- strsplit(novel.lower.v,
+                         "\\W")
+moby.word.v <- unlist(moby.words.l)
+not.blanks.v <- which(moby.word.v != "")
+
+
+
+moby.word.v <- moby.word.v[not.blanks.v]
+whale.hits.v <- length(which(moby.word.v == "whale"))
+total.words.v <- length(moby.word.v)
+moby.fraqs.t <- table(moby.word.v)
+sorted.moby.fraq.t <- sort(moby.fraqs.t,
+                           decreasing = TRUE)
+```
+
+#
