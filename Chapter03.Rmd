@@ -7,7 +7,8 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+```
+```{r required}
 text.v <- scan(file = "./SupportingMaterials/data/plainText/melville.txt",
                what = "character",
                sep = "\n")
@@ -36,4 +37,31 @@ sorted.moby.fraq.t <- sort(moby.fraqs.t,
                            decreasing = TRUE)
 ```
 
-#
+
+# Accessing Word Data
+```{r}
+sorted.moby.fraq.t["he"]
+sorted.moby.fraq.t["she"]
+sorted.moby.fraq.t["him"]
+sorted.moby.fraq.t["her"]
+
+sorted.moby.fraq.t["him"] / sorted.moby.fraq.t["her"]
+sorted.moby.fraq.t["he"] / sorted.moby.fraq.t["she"]
+
+length(moby.word.v)
+sum(sorted.moby.fraq.t)
+```
+
+# Recycling
+```{r}
+sorted.moby.rel.freqs.t <- 100 * (sorted.moby.fraq.t/sum(sorted.moby.fraq.t))
+sorted.moby.rel.freqs.t["the"]
+```
+
+```{r, fig.cap="section 3.2}
+plot
+
+```
+
+
+
