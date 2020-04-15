@@ -59,9 +59,26 @@ sorted.moby.rel.freqs.t["the"]
 ```
 
 ```{r, fig.cap="section 3.2}
-plot
+plot(sorted.moby.rel.freqs.t[1:10],
+     type = "b",
+     xlab = "Top Ten Words",
+     ylab = "Percentage of full text",
+     xant = "n")
+axis(1, 1:10,
+     labels = names(sorted.moby.rel.freqs.t[1:10]))
 
 ```
 
+# Exercises
+## 3.1
+```{r}
+austen.text.v <- scan(file = "./SupportingMaterials/data/plainText/austen.txt",
+               what = "character",
+               sep = "\n")
+austen.first <- which(austen.text.v == "CHAPTER 1")
+austen.last <- which(austen.text.v == "THE END")
+austen.last <- austen.last - 1
+
+```
 
 
