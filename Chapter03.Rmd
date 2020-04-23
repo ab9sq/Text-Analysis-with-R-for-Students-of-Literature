@@ -2,7 +2,12 @@
 title: "Chapter 3"
 author: "Nick Lauerman"
 date: "Started 11-Mar-2020"
-output: pdf_document
+output: 
+  pdf_document: 
+    fig_caption: yes
+    fig_height: 6.5
+    fig_width: 6.5
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -58,12 +63,13 @@ sorted.moby.rel.freqs.t <- 100 * (sorted.moby.fraq.t/sum(sorted.moby.fraq.t))
 sorted.moby.rel.freqs.t["the"]
 ```
 
-```{r, fig.cap="section 3.2}
+```{r}
+#, fig.cap="section 3.2"}
 plot(sorted.moby.rel.freqs.t[1:10],
      type = "b",
      xlab = "Top Ten Words",
      ylab = "Percentage of full text",
-     xant = "n")
+     xaxt = "n")
 axis(1, 1:10,
      labels = names(sorted.moby.rel.freqs.t[1:10]))
 
@@ -71,13 +77,49 @@ axis(1, 1:10,
 
 # Exercises
 ## 3.1
-```{r}
+```{r exercise 3.1}
 austen.text.v <- scan(file = "./SupportingMaterials/data/plainText/austen.txt",
                what = "character",
                sep = "\n")
 austen.first <- which(austen.text.v == "CHAPTER 1")
 austen.last <- which(austen.text.v == "THE END")
 austen.last <- austen.last - 1
+austen.lines <- austen.text.v[austen.first:austen.last]
+austen.text <- paste(austen.lines,
+                     collapse = " ")
+austen.lower <- tolower(austen.text)
+austen.words <- strsplit(austen.lower,
+                         "\\W")
+austen.words.v <- unlist(austen.words)
+not.blanks <- which(austen.words.v != "")
+austen.words.v <- austen.words.v[not.blanks]
+
+austen.sorted.freq.table <- sort(table(austen.words.v),
+                                 decreasing = TRUE)
+head(austen.sorted.freq.table,
+     n = 10)
+austen.sorted.rel.freq.table <- 100*(austen.sorted.freq.table /
+                                             sum(austen.sorted.freq.table))
+```
+```{r plot for exercise 3.1}
+#, fig.cap="exercise 3.1}
+plot(austen.sorted.rel.freq.table[1:10],
+     type = "b",
+     main = "Seence and Sensibility",
+     xlab = "Top 10 words",
+     ylab = "Percentage",
+     xaxt = "n")
+axis(1, 1:10,labels = names(austen.sorted.rel.freq.table[1:10]))
+```
+
+## Exercise 3.2
+```{r exercise 3.2}
+unique(c(names(sorted.moby.rel.freqs.t)[1:10],
+        names(austen.sorted.rel.freq.table)[1:10]))
+```
+
+## Exercise 3.3
+```{r exercise 3.3}
 
 ```
 
