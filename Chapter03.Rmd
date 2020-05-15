@@ -120,7 +120,22 @@ unique(c(names(sorted.moby.rel.freqs.t)[1:10],
 
 ## Exercise 3.3
 ```{r exercise 3.3}
-
+names(austen.sorted.rel.freq.table[
+  which(names(austen.sorted.rel.freq.table[1:10])
+              %in% names(sorted.moby.rel.freqs.t[1:10]))
+])
 ```
+
+## Exercise 3.4
+```{r}
+presentAusten <- which(names(austen.sorted.rel.freq.table[1:10])
+              %in% names(sorted.moby.rel.freqs.t[1:10]))
+names(austen.sorted.rel.freq.table[1:10])[-presentAusten]
+
+presentMoby<- which(names(sorted.moby.rel.freqs.t[1:10])
+              %in% names(austen.sorted.rel.freq.table[1:10]))
+names(sorted.moby.rel.freqs.t[1:10])[-presentMoby]
+```
+
 
 
