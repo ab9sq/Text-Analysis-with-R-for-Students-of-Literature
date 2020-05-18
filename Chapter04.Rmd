@@ -89,6 +89,87 @@ chap.positions.v <- c(chap.positions.v,
 chap.positions.v
 ```
 
-# The *for* Loop and*if* Conditional
+# The *for* Loop and *if* Conditional
+```{r}
+chap.positions.v[1]
+chap.positions.v[2]
+
+for (i in 1:length(chap.positions.v)) {
+  print(chap.positions.v[i])
+}
+
+for (i in 1:length(chap.positions.v)) {
+  print(paste("Chapter ",
+              i,
+              " begins at position ",
+              chap.positions.v[i],
+              sep = ""))
+}
+
+chapter.raws.l <- list()
+chapter.freqs.l <- list()
+
+for (i in 1:length(chap.positions.v)) {
+  if(i != length(chap.positions.v)){
+    chapter.title <- novel.lines.v[chap.positions.v[i]]
+    start <- chap.positions.v[i] + 1
+    end <- chap.positions.v[i + 1] - 1
+    chapter.lines.v <- novel.lines.v[start:end]
+    chapter.words.v <- tolower(paste(chapter.lines.v,
+                                     collapse = " "))
+    chapter.words.l <- strsplit(chapter.words.v, "\\W")
+    chapter.words.v <- unlist(chapter.words.l)
+    chapter.words.v <- chapter.words.v[which(chapter.words.v != "")]
+    chapter.freq.t <- table(chapter.words.v)
+    chapter.raws.l[[chapter.title]] <- chapter.freq.t
+    chapter.freqs.t.rel <- 100 * (chapter.freq.t/sum(chapter.freq.t))
+    chapter.freqs.l[[chapter.title]] <- chapter.freqs.t.rel
+  }
+}
+
+```
+
+# Accessing and Processing List Items
+## *rbind* 
+```{r}
+x <- c(1,2,3,4,5)
+y <- c(6,7,8,9,10)
+
+rbind(x,y)
+
+y <- c(6,7,8,9,10,11)
+rbind(x,y)
+
+```
+
+## more recycling
+```{r}
+x <- c(1,2,3,4,5,6)
+y <- 2
+x*y
+y <- c(2,3)
+x*y
+```
+
+## *apply*
+```{r}
+#chapter.freqs.l
+#chapter.raws.l
+
+x <- list(a = 1:10,
+          b = 2:25,
+          b = 100:1090)
+lapply(x, mean)
+
+chapter.freqs.l[[1]]["whale"]
+
+lapply(chapter.freqs.l, '[', 'whale')
+whale.l <- lapply(chapter.freqs.l, '[', 'whale')
+rbind(whale.l[[1]], 
+      whale.l[[2]],
+      whale.l[[3]])
+```
+
+*do.call* (Do Dot Call)
 
 
