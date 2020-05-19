@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Data Setup
-From Adendex C
+From Appendex C
 ```{r}
 text.v <- scan(file = "./SupportingMaterials/data/plainText/melville.txt",
                what = "character",
