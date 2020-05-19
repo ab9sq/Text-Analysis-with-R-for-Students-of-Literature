@@ -170,6 +170,42 @@ rbind(whale.l[[1]],
       whale.l[[3]])
 ```
 
-*do.call* (Do Dot Call)
+## *do.call* (Do Dot Call)
+
+```{r}
+x <- list(1:3,4:6,7:9)
+x
+do.call(rbind,x)
+whales.m <- do.call(rbind, whale.l)
+whales.m
+
+ahab.l <- lapply(chapter.freqs.l, '[', 'ahab')
+ahabs.m <- do.call(rbind, ahab.l)
+ahabs.m
+```
+
+## *cbind*
+```{r}
+class(whales.m)
+class(whales.m[,1])
+x <- c(1,2,3,4,5,6)
+y <- c(2,4,5,6,7,8)
+z <- c(24,23,34,32,12,10)
+test.m <- cbind(x,y,z)
+test.m
+test.m[2,3]
+test.m[2,]
+test.m[,1]
+test.m[,"y"]
+
+whales.v <- whales.m[,1]
+ahabs.v <- ahabs.m[,1]
+whales.ahabs.m <- cbind(whales.v, ahabs.v)
+dim(whales.ahabs.m)
+colnames(whales.ahabs.m) <- c("whale","ahab")
+barplot(whales.ahabs.m,
+        beside = TRUE,
+        col = "gray")
+```
 
 
