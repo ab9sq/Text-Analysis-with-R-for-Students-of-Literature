@@ -208,4 +208,38 @@ barplot(whales.ahabs.m,
         col = "gray")
 ```
 
+# Exercises
+## 1
+```{r}
+queequeg.l <- lapply(chapter.freqs.l, '[' , 'queequeg')
+queequeg.m <- do.call(rbind, queequeg.l)
+queequeg.v <- queequeg.m[,1]
+whales.ahab.queequeg.m <- cbind(whales.v, ahabs.v, queequeg.v)
+colnames(whales.ahab.queequeg.m) <- c("whale",
+                                      "ahab",
+                                      "queequeg")
+barplot(whales.ahab.queequeg.m,
+        beside = TRUE,
+        col = "gray")
 
+```
+
+## 2
+```{r}
+
+whale.raw.l <- lapply(chapter.raws.l, '[' , 'whale')
+whale.raw.m <- do.call(rbind, whale.raw.l)
+whale.raw.v <- as.vector(whale.raw.m[,1])
+
+ahab.raw.l <- lapply(chapter.raws.l, '[' , 'ahab')
+ahab.raw.m <- do.call(rbind, ahab.raw.l)
+ahab.raw.v <- as.vector(ahab.raw.m[,1])
+
+whale.ahab.raw.m <- cbind(whale.raw.v, ahab.raw.v)
+colnames(whale.ahab.raw.m) <- c("whale",
+                                "ahab")
+
+barplot(whale.ahab.raw.m,
+        beside = TRUE,
+        col = "blue")
+```
