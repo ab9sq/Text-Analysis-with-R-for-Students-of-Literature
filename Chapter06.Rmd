@@ -104,15 +104,32 @@ plot(ttr.m,
 
 # Exercise
 ## 1
+```{r}
+ttr.v <- as.vector(ttr.m)
+chapter.lengths.m <- do.call(rbind, lapply(chapter.raws.l, sum))
+chap.len.v <- as.vector(chapter.lengths.m)
+cor(ttr.v, chap.len.v)
+```
 
+## 2
+```{r}
+mean.word.use.v <- as.vector(mean.word.use.m)
+cor(mean.word.use.v, chap.len.v)
+```
 
+## 3
+```{r}
+cor(ttr.v, chap.len.v)
+my.cors.v <- NULL
+for (i in 1:10000) {
+  my.cors.v <- c(my.cors.v,
+                 cor(sample(ttr.v), chap.len.v))
+}
 
-
-
-
-
-
-
-
-
+min(my.cors.v)
+max(my.cors.v)
+range(my.cors.v)
+mean(my.cors.v)
+sd(my.cors.v)
+```
 
