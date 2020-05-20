@@ -1,7 +1,7 @@
 ---
-title: "Untitled"
+title: "Chapter 5"
 author: "Nick Lauerman"
-date: "5/19/2020"
+date: "Started 5/19/2020"
 output: 
   pdf_document: 
     fig_caption: yes
@@ -61,3 +61,109 @@ whales.ahabs.m <- cbind(whales.v, ahabs.v)
 colnames(whales.ahabs.m) <- c("whale",
                               "ahab")
 ```
+
+# Correlation Analysis
+```{r}
+whales.ahabs.m[which(is.na(whales.ahabs.m))] <- 0
+cor(whales.ahabs.m)
+
+mycor <- cor(whales.ahabs.m[,"whale"],
+             whales.ahabs.m[,"ahab"])
+mycor
+```
+
+# A Word About Data Frames
+```{r}
+x <- matrix(1, 3, 3)
+class(x[1,2])
+x[1,2] <- "Sam I am"
+x
+
+class(x[1,2])
+class(x[1,3])
+
+x <- matrix(1, 3, 3)
+x.df <- as.data.frame(x)
+x.df
+x.df[1,2] <- "Sam I am"
+class(x.df[1,2])
+class(x.df[1,3])
+x.df
+```
+
+# Testing Correlation with Randomization
+```{r}
+cor.data.df <- as.data.frame(whales.ahabs.m)
+cor(cor.data.df)
+
+sample(cor.data.df$whale)
+cor(sample(cor.data.df$whale),
+    cor.data.df$ahab)
+
+mycors.v <- NULL
+for (i in 1:10000) {
+  mycors.v <- c(mycors.v,
+                cor(sample(cor.data.df$whale),
+    cor.data.df$ahab))
+}
+min(mycors.v)
+max(mycors.v)
+range(mycors.v)
+mean(mycors.v)
+sd(mycors.v)
+
+h <- hist(mycors.v,
+          breaks = 100,
+          col = "grey",
+          xlab = "Correlation Coefficient",
+          main = "Histogram of Random Correlation Coefficients\n with Normal Curve",
+          plot = TRUE)
+xfit <- seq(min(mycors.v), max(mycors.v), length = 1000)
+yfit <- dnorm(xfit,
+              mean = mean(mycors.v),
+              sd = sd(mycors.v))
+yfit <- yfit * diff(h$mids[1:2]) * length(mycors.v)
+lines(xfit, yfit, col = "black", lwd = 2 )
+```
+
+# Exercises
+## 1
+```{r}
+i.l <- lapply(chapter.freqs.l, '[', 'i')
+i.m <- do.call(rbind, i.l)
+i.v <- as.vector(i.m[,1])
+i.v[which(is.na(i.v))] <- 0
+
+cor.data.df$i <- i.v
+
+my.l <- lapply(chapter.freqs.l, '[', 'my')
+my.m <- do.call(rbind, my.l)
+my.v <- as.vector(my.m[,1])
+my.v[which(is.na(my.v))] <- 0
+
+cor.data.df$my <- my.v
+
+cor(cor.data.df)
+```
+
+## 2
+```{r}
+my.i.m <- cbind(my.v, i.v)
+my.i.cor.data.df <- as.data.frame(my.i.m)
+
+cor(my.i.cor.data.df$i,
+    my.i.cor.data.df$my)
+i.my.cor.v <- NULL
+for (i in 1:10000) {
+  i.my.cor.v <- c(i.my.cor.v,
+                  cor(sample(my.i.cor.data.df$i),
+                      my.i.cor.data.df$my))
+}
+min(i.my.cor.v)
+max(i.my.cor.v)
+range(i.my.cor.v)
+mean(i.my.cor.v)
+sd(i.my.cor.v)
+
+```
+
