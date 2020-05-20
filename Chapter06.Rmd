@@ -49,5 +49,70 @@ for (i in 1:length(chap.positions.v)) {
     chapter.freqs.l[[chapter.title]] <- chapter.freqs.t.rel
   }
 }
+
 ```
+
+# Lexical Variety and the Type-Token Ratio
+# Mean Word Frequency
+```{r}
+length(chapter.raws.l)
+names(chapter.raws.l)
+
+class(chapter.raws.l$`CHAPTER 1. Loomings.`)
+
+sum(chapter.raws.l[[1]])
+length(chapter.raws.l[[1]])
+
+sum(chapter.raws.l[[1]]) / length(chapter.raws.l[[1]])
+
+mean(chapter.raws.l[[1]])
+```
+
+# Extracting Word Usage Means
+```{r}
+lapply(chapter.raws.l, mean)
+
+mean.word.use.m <- do.call(rbind, lapply(chapter.raws.l, mean))
+
+dim(mean.word.use.m)
+plot(mean.word.use.m,
+     type = "h")
+scale(mean.word.use.m)
+plot(scale(mean.word.use.m),
+     type = "h")
+```
+
+# Ranking the Values
+```{r}
+order(mean.word.use.m)
+order(mean.word.use.m,
+      decreasing =  TRUE)
+mean.word.use.m[order(mean.word.use.m,
+                      decreasing = TRUE), ]
+```
+
+# Calculating the TTR Inside *lapply*
+```{r}
+length(chapter.raws.l[[1]]) / sum(chapter.raws.l[[1]]) * 100
+
+ttr.l <- lapply(chapter.raws.l, function(x) {length(x)/sum(x)*100})
+ttr.m <- do.call(rbind, ttr.l)
+ttr.m[order(ttr.m, decreasing = TRUE), ]
+plot(ttr.m, 
+     type = "h")
+```
+
+# Exercise
+## 1
+
+
+
+
+
+
+
+
+
+
+
 
