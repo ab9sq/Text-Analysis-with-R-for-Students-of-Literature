@@ -24,7 +24,6 @@ start.v <- which(text.v == "CHAPTER 1. Loomings.")
 end.v <- which(text.v == "orphan.")
 novel.lines.v <- text.v[start.v:end.v]
 novel.lines.v <- unlist(novel.lines.v)
-
 chap.positions.v <- grep("^CHAPTER \\d", novel.lines.v)
 last.position.v <- length(novel.lines.v)
 chap.positions.v <- c(chap.positions.v,
@@ -51,4 +50,32 @@ for (i in 1:length(chap.positions.v)) {
 }
 chapter.lengths.m <- do.call(rbind, lapply(chapter.raws.l, sum))
 ```
+
+# *sapply*
+# A Mini-Conditional Function
+```{r}
+chapter.hapax.v <- sapply(chapter.raws.l, function(x) sum(x == 1))
+chapter.hapax.v
+chapter.lengths.m <- do.call(rbind, lapply(chapter.raws.l, sum))
+chapter.hapax.v[1] / chapter.lengths.m[1]
+chapter.hapax.v[2] / chapter.lengths.m[2]
+hapax.percentage <- chapter.hapax.v / chapter.lengths.m
+barplot(hapax.percentage,
+        beside = TRUE,
+        names.arg = seq(1:length(chapter.raws.l)))
+
+```
+
+# Exercises
+## 1
+
+
+
+
+
+
+
+
+
+
 
